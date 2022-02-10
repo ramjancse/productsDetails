@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import About from './components/About';
 // import Home from './components/Home';
-// import Products from './components/Products';
-import Service from './components/Service';
+import Products from './components/Products';
+// import Service from './components/Service';
 
 
 export default class App extends Component {
@@ -20,7 +20,7 @@ export default class App extends Component {
       <button onClick={() => this.click('about')}> About </button>
       { this.state.page === 'home'? <Home/> : <About/>} */}
 
-      <Service />
+      <Products />
     </div>;
   }
 }

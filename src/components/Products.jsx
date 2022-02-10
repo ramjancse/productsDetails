@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import Details from './Details';
- 
+import Loader from './Loader';
 
 export default class Products extends Component {
     constructor(props) {
         super(props)
-       
+        
         this.state = {
-           PRODUCTS : [
+            view: {
+                name: '',
+                price: '',
+                category: "",
+            },
+            visible:'hidden',
+            loader : true,
+            PRODUCTS: [
                 {
                     id : 1, 
                     name: "Football",
@@ -29,23 +35,46 @@ export default class Products extends Component {
               ]
         }
     }
-    handleClick(product) {
-        
-        console.log(product);
-        <Details name={product.name}/>
+    
+    componentDidMount() {
+        console.log('component mounteed');
+        setTimeout(() => {
+            console.log('component mounted after 1 sec');
+            this.setState({
+                visible: 'visible'
+            })
+            this.setState({
+                loader : false,
+            })
+        }, 1000);
+     }
+
+    handleClick(PRODUCT) {
+        this.setState({
+            view: {
+                name: PRODUCT.name,
+                price: PRODUCT.price,
+                category: PRODUCT.category
+            }
+        })
         
     }
 
     render() {
-      return <div>
+         
+        return <div>
         {
-              this.state.PRODUCTS.map((product, index) => 
-                  <a onClick={ this.handleClick.bind(this, product) } >
-                      <p key={product.id}> Name : {product.name}  Price : {product.price} </p>
-                     
-                  </a>
-            )   
-        }   
+            this.state.loader ? <Loader />:
+            this.state.PRODUCTS.map((PRODUCT, index) =>  
+            <button onClick={ ()=> this.handleClick(PRODUCT)} key={PRODUCT.id}>
+              {PRODUCT.name}
+            </button> )   
+        } 
+            <div style={{visibility: this.state.visible}}>
+                <h1> Name : {this.state.view.name } </h1>
+                <h1> Price : {this.state.view.price } </h1>
+                <h1> Category : {this.state.view.category } </h1>
+            </div>    
     </div>;
   }
 }
